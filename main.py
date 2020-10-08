@@ -35,9 +35,11 @@ while not gameExit:
             py.draw.line(display, py.Color('white'), (i*settings.BLOCK_SIZE, settings.DISPLAY_SIZE), (i*settings.BLOCK_SIZE, 0))
             py.draw.line(display, py.Color('white'), (0, i*settings.BLOCK_SIZE), (settings.DISPLAY_SIZE, i*settings.BLOCK_SIZE))
 
+        
+        if snake.bodies[0].vel != (0, 0):
+            snake.eat()
         snake.move()
-        # if snake.vel != (0, 0):
-        #     snake.eat()
+        
         snake.draw(display)
         prev_move = time.time()
 
