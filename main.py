@@ -5,7 +5,7 @@ import random
 import settings
 import snake
 import apple
-
+import words
 
 py.init()
 
@@ -14,8 +14,11 @@ clock = py.time.Clock()
 
 gameExit = False
 prev_move = time.time()
-snake = snake.Snake()
-apples = [apple.Apple(snake)]
+
+language = "Spanish"
+word, answer = words.get_word(language)
+snake = snake.Snake(word)
+apples = [apple.Apple(answer, snake)]
 
 while not gameExit:
     for event in py.event.get():
@@ -43,8 +46,10 @@ while not gameExit:
         snake.move()
         for apple in apples:
             if snake.collide(apple.position):
-                snake.eat()
-                apple.__init__(snake)
+                snake.eat(answer)
+                word, answer = words.get_word(language)
+                snake.change_text(word)
+                apple.__init__(answer, snake)
                 break
         
         apple.draw(display)

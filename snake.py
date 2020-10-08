@@ -14,13 +14,17 @@ class SnakeBod:
     def collide(self, pos):
         return self.position == list(pos)
 
+    def change_text(self, text):
+        self.original_surface = settings.text_surface(text)
+        print(text)
+
     def draw(self, display):
         display.blit(py.transform.rotate(self.original_surface, self.rotation), settings.grid_to_pos(self.position))
 
 
 class Snake():
-    def __init__(self):
-        self.bodies = [SnakeBod("Hello", (9, 9), 0, (0, 0))]
+    def __init__(self, text):
+        self.bodies = [SnakeBod(text, (9, 9), 0, (0, 0))]
         self.head = self.bodies[0]
         self.changed = False
     
@@ -57,9 +61,9 @@ class Snake():
                 self.head.rotation = -90*(ind % 4)
                 self.changed = True
 
-    def eat(self):
+    def eat(self, text="|"):
         tail = self.bodies[-1]
-        self.bodies.append(SnakeBod("-", tail.position[:], tail.rotation, tail.vel[:]))
+        self.bodies.append(SnakeBod(text, tail.position[:], tail.rotation, tail.vel[:]))
 
     def collide(self, pos):
         collided = False
@@ -68,6 +72,9 @@ class Snake():
             if collided:
                 break
         return collided
+
+    def change_text(self, text):
+        self.bodies[0].change_text(text)
 
     def draw(self, display):
         for b in self.bodies:
