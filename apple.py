@@ -11,4 +11,4 @@ class Apple:
 
 
     def draw(self, display):
-        py.draw.circle(display, py.Color('red'), settings.grid_to_pos(self.position))
+        py.draw.circle(display, py.Color('red'), [int(p + settings.BLOCK_SIZE/2) for p in settings.grid_to_pos(self.position)], int(settings.BLOCK_SIZE/2))

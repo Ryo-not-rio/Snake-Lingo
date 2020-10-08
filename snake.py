@@ -12,7 +12,7 @@ class SnakeBod:
         self.vel = velocity
 
     def collide(self, pos):
-        return self.position == pos
+        return self.position == list(pos)
 
     def draw(self, display):
         display.blit(py.transform.rotate(self.original_surface, self.rotation), settings.grid_to_pos(self.position))
@@ -64,7 +64,9 @@ class Snake():
     def collide(self, pos):
         collided = False
         for bod in self.bodies:
-            collided = collided and bod.collide(pos)
+            collided = collided or bod.collide(pos)
+            if collided:
+                break
         return collided
 
     def draw(self, display):
