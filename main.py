@@ -2,6 +2,7 @@ import pygame as py
 import settings
 import snake
 
+py.init()
 
 display = py.display.set_mode((settings.DISPLAY_SIZE, settings.DISPLAY_SIZE))
 clock = py.time.Clock()
