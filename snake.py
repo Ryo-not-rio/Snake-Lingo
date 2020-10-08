@@ -16,7 +16,6 @@ class SnakeBod:
 
     def change_text(self, text):
         self.original_surface = settings.text_surface(text)
-        print(text)
 
     def draw(self, display):
         display.blit(py.transform.rotate(self.original_surface, self.rotation), settings.grid_to_pos(self.position))
@@ -26,7 +25,7 @@ class Snake():
     def __init__(self, text):
         self.bodies = [SnakeBod(text, (9, 9), 0, (0, 0))]
         self.head = self.bodies[0]
-        self.changed = False
+        self.changed = 0
     
     def move(self):
         for i in range(0, len(self.bodies)-1):
@@ -36,7 +35,7 @@ class Snake():
             bod.position = prev.position[:]
             bod.vel = prev.vel[:]
             
-            if not self.changed or prev != self.head:
+            if self.changed or prev != self.head:
                 bod.rotation = prev.rotation
             else:
                 self.changed = False

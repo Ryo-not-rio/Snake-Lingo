@@ -36,12 +36,12 @@ while not gameExit:
 
     ### Drawing ###
     if time.time() - prev_move > 1/settings.MOVES_PER_SECOND:
-        display.fill(py.Color('black'))
+        display.fill(py.Color('white'))
 
         # Draw columns and rows
         for i in range(settings.NUM_ROWS_COLUMNS):
-            py.draw.line(display, py.Color('white'), (i*settings.BLOCK_SIZE, settings.DISPLAY_SIZE), (i*settings.BLOCK_SIZE, 0))
-            py.draw.line(display, py.Color('white'), (0, i*settings.BLOCK_SIZE), (settings.DISPLAY_SIZE, i*settings.BLOCK_SIZE))
+            py.draw.line(display, py.Color('gray'), (i*settings.BLOCK_SIZE, settings.DISPLAY_SIZE), (i*settings.BLOCK_SIZE, 0))
+            py.draw.line(display, py.Color('gray'), (0, i*settings.BLOCK_SIZE), (settings.DISPLAY_SIZE, i*settings.BLOCK_SIZE))
         
         snake.move()
         for apple in apples:
