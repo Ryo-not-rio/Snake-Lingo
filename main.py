@@ -18,13 +18,13 @@ while not gameExit:
             gameExit = True
         if event.type == py.KEYDOWN:
             if event.key in [py.K_LEFT, py.K_a]:
-                snake.change_directions('left')
+                snake.change_directions((-1, 0))
             if event.key in [py.K_RIGHT, py.K_d]:
-                snake.change_directions('right')
+                snake.change_directions((1, 0))
             if event.key in [py.K_UP, py.K_w]:
-                snake.change_directions('up')
+                snake.change_directions((0, -1))
             if event.key in [py.K_DOWN, py.K_s]:
-                snake.change_directions('down')
+                snake.change_directions((0, 1))
 
     ### Drawing ###
     if time.time() - prev_move > 1/settings.MOVES_PER_SECOND:
@@ -36,6 +36,8 @@ while not gameExit:
             py.draw.line(display, py.Color('white'), (0, i*settings.BLOCK_SIZE), (settings.DISPLAY_SIZE, i*settings.BLOCK_SIZE))
 
         snake.move()
+        # if snake.vel != (0, 0):
+        #     snake.eat()
         snake.draw(display)
         prev_move = time.time()
 
