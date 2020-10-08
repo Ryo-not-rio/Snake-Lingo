@@ -5,11 +5,14 @@ import settings
 
 
 class SnakeBod:
-    def __init__(self, position, rotation, velocity):
-        self.original_surface = settings.text_surface("hello")
+    def __init__(self, text, position, rotation, velocity):
+        self.original_surface = settings.text_surface(text)
         self.rotation = rotation
         self.position = position
         self.vel = velocity
+
+    def collide(self, pos):
+        return self.position == pos
 
     def draw(self, display):
         display.blit(py.transform.rotate(self.original_surface, self.rotation), settings.grid_to_pos(self.position))
@@ -17,7 +20,7 @@ class SnakeBod:
 
 class Snake():
     def __init__(self):
-        self.bodies = [SnakeBod((9, 9), 0, (0, 0))]
+        self.bodies = [SnakeBod("Hello", (9, 9), 0, (0, 0))]
         self.head = self.bodies[0]
         self.changed = False
     
@@ -56,7 +59,13 @@ class Snake():
 
     def eat(self):
         tail = self.bodies[-1]
-        self.bodies.append(SnakeBod(tail.position[:], tail.rotation, tail.vel[:]))
+        self.bodies.append(SnakeBod("-", tail.position[:], tail.rotation, tail.vel[:]))
+
+    def collide(self, pos):
+        collided = False
+        for bod in self.bodies:
+            collided = collided and bod.collide(pos)
+        return collided
 
     def draw(self, display):
         for b in self.bodies:

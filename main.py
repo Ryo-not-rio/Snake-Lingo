@@ -1,7 +1,11 @@
 import pygame as py
+import time
+import random
+
 import settings
 import snake
-import time
+import apple
+
 
 py.init()
 
@@ -11,6 +15,7 @@ clock = py.time.Clock()
 gameExit = False
 prev_move = time.time()
 snake = snake.Snake()
+apples = [apple.Apple(snake)]
 
 while not gameExit:
     for event in py.event.get():
@@ -36,8 +41,7 @@ while not gameExit:
             py.draw.line(display, py.Color('white'), (0, i*settings.BLOCK_SIZE), (settings.DISPLAY_SIZE, i*settings.BLOCK_SIZE))
 
         
-        if snake.bodies[0].vel != (0, 0):
-            snake.eat()
+        
         snake.move()
         
         snake.draw(display)
