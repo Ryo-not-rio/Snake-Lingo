@@ -14,5 +14,7 @@ translator = Translator()
 def get_word(language):
     lang = lang_dict[language]
     lang_word = wordfreq.random_words(lang, nwords=1)
-    eng_word = translator.translate(lang_word, src=lang, dest='en')
-    return (lang_word, eng_word.text)
+    eng_word = translator.translate(lang_word, src=lang, dest='en').text
+    if len(lang_word) > 10 or len(eng_word) > 10:
+        lang_word, eng_word = get_word(language)
+    return lang_word, eng_word
