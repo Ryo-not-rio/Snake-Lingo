@@ -27,8 +27,11 @@ class SnakeBod:
 
 
 class Snake():
-    def __init__(self, text):
-        self.bodies = [SnakeBod(text, (5, 5), 0, (0, 0), bold=True)]
+    def __init__(self, text, grid):
+        self.grid = grid
+        initial_pos = (5, 5)
+        self.bodies = [SnakeBod(text, initial_pos, 0, (0, 0), bold=True)]
+        self.grid[initial_pos[0]][initial_pos[1]] = True
         self.head = self.bodies[0]
         self.waited = False
         self.rotations = []
@@ -37,6 +40,11 @@ class Snake():
         for i in range(0, len(self.bodies)-1):
             index = len(self.bodies)-1-i
             bod = self.bodies[index]
+
+            if i==0:
+                self.grid[bod.position[0]][bod.position[1]] = False
+
+            
             bod.prev_pos = bod.position[:]
             prev = self.bodies[index-1]
             bod.position = prev.position[:]
@@ -51,16 +59,26 @@ class Snake():
                 else:
                     self.waited = True
                 
-        
+        ### Moving head ###
+        if len(self.bodies) == 1:
+            self.grid[self.head.position[0]][self.head.position[1]] = False
         self.head.position = list(np.array(self.head.position) + np.array(self.head.vel))
-        if self.head.position[0] < 0:
-            self.head.position[0] = settings.NUM_ROWS_COLUMNS-1
-        if self.head.position[0] >= settings.NUM_ROWS_COLUMNS:
-            self.head.position[0] = 0
-        if self.head.position[1] < 0:
-            self.head.position[1] = settings.NUM_ROWS_COLUMNS-1
-        if self.head.position[1] >= settings.NUM_ROWS_COLUMNS:
-            self.head.position[1] = 0
+
+        ### Check if gameover ###        
+        if self.head.position[0] < 0 or \
+            self.head.position[0] >= settings.NUM_ROWS_COLUMNS or \
+            self.head.position[1] < 0 or \
+            self.head.position[1] >= settings.NUM_ROWS_COLUMNS:
+            return True
+        if self.grid[self.head.position[0]][self.head.position[1]]:
+            return True
+        ############################
+        
+        self.grid[self.head.position[0]][self.head.position[1]] = True
+        return False
+        
+
+        
 
     def change_directions(self, direction):
         if direction is not None:
@@ -75,7 +93,9 @@ class Snake():
 
     def eat(self, text="|"):
         tail = self.bodies[-1]
-        self.bodies.append(SnakeBod(text, tail.position[:], tail.rotation, tail.vel[:], text_size=int(settings.BLOCK_SIZE*0.7)))
+        pos = tail.position[:]
+        self.bodies.append(SnakeBod(text, pos, tail.rotation, tail.vel[:], text_size=int(settings.BLOCK_SIZE*0.7)))
+        self.grid[pos[0]][pos[1]] = True
 
     def collide(self, pos):
         collided = False

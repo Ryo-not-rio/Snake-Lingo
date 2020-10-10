@@ -15,10 +15,12 @@ clock = py.time.Clock()
 gameExit = False
 prev_move = time.time()
 
+grid = [[False for j in range(settings.NUM_ROWS_COLUMNS)] for i in range(settings.NUM_ROWS_COLUMNS)]
+
 language = "Spanish"
 word, answer = words.get_word(language)
-snake = snake.Snake(word)
-apples = [apple.Apple(answer, snake)]
+snake = snake.Snake(word, grid)
+apples = [apple.Apple(answer, grid)]
 directions = []
 
 while not gameExit:
@@ -39,13 +41,13 @@ while not gameExit:
         if directions:
             snake.change_directions(directions[-1])
         directions = []
-        snake.move()
+        gameExit = snake.move()
         for apple in apples:
-            if snake.collide(apple.position):
+            if grid[apple.position[0]][apple.position[1]]:
                 snake.eat(word)
                 word, answer = words.get_word(language)
                 snake.change_text(word)
-                apple.__init__(answer, snake)
+                apple.__init__(answer, grid)
                 break
         prev_move = time.time()
 
