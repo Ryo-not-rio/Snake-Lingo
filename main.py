@@ -69,6 +69,12 @@ while not game_exit:
                 directions.append((0, -1))
             if event.key in [py.K_DOWN, py.K_s]:
                 directions.append((0, 1))
+
+        if event.type == py.MOUSEBUTTONUP:
+            if game_over:
+                pos = py.mouse.get_pos()
+                game_over_screen.click(pos)
+
         
     if not game_over:
         if time.time() - prev_move > 1/settings.MOVES_PER_SECOND:
