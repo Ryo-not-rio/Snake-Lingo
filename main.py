@@ -20,7 +20,8 @@ prev_move = time.time()
 grid = [[False for j in range(settings.NUM_ROWS_COLUMNS)] for i in range(settings.NUM_ROWS_COLUMNS)]
 
 language = "Spanish"
-word, answer = words.get_word(language)
+word_generator = words.WordGenerator(language)
+word, answer = word_generator.get_word()
 snake_obj = snake.Snake(word, grid)
 apples = [apple.Apple(answer, grid)]
 directions = []
@@ -47,7 +48,8 @@ def initialize():
     grid = [[False for j in range(settings.NUM_ROWS_COLUMNS)] for i in range(settings.NUM_ROWS_COLUMNS)]
 
     language = "Spanish"
-    word, answer = words.get_word(language)
+    word_generator = words.WordGenerator(language)
+    word, answer = word_generator.get_word()
     snake_obj = snake.Snake(word, grid)
     apples = [apple.Apple(answer, grid)]
     directions = []
@@ -76,7 +78,7 @@ def each_move():
     for apple_obj in apples:
         if grid[apple_obj.position[0]][apple_obj.position[1]]:
             snake_obj.eat(word)
-            word, answer = words.get_word(language)
+            word, answer = word_generator.get_word()
             snake_obj.change_text(word)
             apple_obj.__init__(answer, grid)
             break

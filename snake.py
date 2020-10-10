@@ -1,12 +1,19 @@
 import pygame as py
 import numpy as np
+import os
 
 import settings
 
 
 class SnakeBod:
-    def __init__(self, text, position, rotation, velocity, bold=False, text_size=settings.BLOCK_SIZE):
-        self.original_surface = settings.text_surface(text, size=text_size, bold=bold)
+    def __init__(self, text, position, rotation, velocity, img=None, bold=False, text_size=settings.BLOCK_SIZE):
+        self.original_surface = py.Surface((settings.BLOCK_SIZE, settings.BLOCK_SIZE), py.SRCALPHA)
+        self.img = img
+        if self.img is not None:
+            self.img = self.img.convert_alpha()
+            self.original_surface.blit(self.img, (0, 0))
+
+        self.original_surface.blit(settings.text_surface(text, size=text_size, bold=bold), (0, 0))
         self.text_size = text_size
         self.bold = bold
         self.rotation = rotation
@@ -20,17 +27,26 @@ class SnakeBod:
         return self.position == list(pos)
 
     def change_text(self, text):
-        self.original_surface = settings.text_surface(text, size=self.text_size, bold=self.bold)
+        self.original_surface = py.Surface((settings.BLOCK_SIZE, settings.BLOCK_SIZE), py.SRCALPHA)
+        if self.img is not None:
+            self.original_surface.blit(self.img, (0, 0))
+
+        self.original_surface.blit(settings.text_surface(text, size=self.text_size, bold=self.bold), (0, 0))
 
     def draw(self, display):
         display.blit(py.transform.rotate(self.original_surface, self.rotation), [int(c) for c in self.pixel_position])
 
 
+head_img = py.image.load(os.path.join("images", "snake_head.png"))
+head_img = py.transform.scale(head_img, (settings.BLOCK_SIZE, settings.BLOCK_SIZE))
+body_img = py.image.load(os.path.join("images", "snake_body.png"))
+body_img = py.transform.scale(body_img, (settings.BLOCK_SIZE, settings.BLOCK_SIZE))
+
 class Snake():
     def __init__(self, text, grid):
         self.grid = grid
         initial_pos = (5, 5)
-        self.bodies = [SnakeBod(text, initial_pos, 0, (0, 0), bold=True)]
+        self.bodies = [SnakeBod(text, initial_pos, 0, (0, 0), img=head_img, bold=True)]
         self.grid[initial_pos[0]][initial_pos[1]] = True
         self.head = self.bodies[0]
         self.waited = False
@@ -76,9 +92,6 @@ class Snake():
         
         self.grid[self.head.position[0]][self.head.position[1]] = True
         return False
-        
-
-        
 
     def change_directions(self, direction):
         if direction is not None:
@@ -94,7 +107,7 @@ class Snake():
     def eat(self, text="|"):
         tail = self.bodies[-1]
         pos = tail.position[:]
-        self.bodies.append(SnakeBod(text, pos, tail.rotation, tail.vel[:], text_size=int(settings.BLOCK_SIZE*0.7)))
+        self.bodies.append(SnakeBod(text, pos, tail.rotation, tail.vel[:], img=body_img, text_size=int(settings.BLOCK_SIZE*0.7)))
         self.grid[pos[0]][pos[1]] = True
 
     def collide(self, pos):
