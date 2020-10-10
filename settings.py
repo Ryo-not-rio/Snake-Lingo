@@ -8,8 +8,8 @@ NUM_ROWS_COLUMNS = 8
 BLOCK_SIZE = int(DISPLAY_SIZE/NUM_ROWS_COLUMNS)
 FONT = py.font.SysFont('arial', 140)
 FONT2 = py.font.SysFont('arial_bold', 140)
-MOVES_PER_SECOND = 2
-FPS = 24
+MOVES_PER_SECOND = 2.3
+FPS = 30
 
 def grid_to_pos(grid_pos):
     return [BLOCK_SIZE*i for i in grid_pos]
