@@ -104,11 +104,15 @@ class Snake():
                 if len(self.bodies) > 1:
                     self.rotations.append(self.head.rotation)
 
-    def eat(self, text="|"):
+    def eat(self, text, correct):
         tail = self.bodies[-1]
         pos = tail.position[:]
-        self.bodies.append(SnakeBod(text, pos, tail.rotation, tail.vel[:], img=body_img, text_size=int(settings.BLOCK_SIZE*0.7)))
-        self.grid[pos[0]][pos[1]] = True
+        if correct:
+            self.bodies.append(SnakeBod(text, pos, tail.rotation, tail.vel[:], img=body_img, text_size=int(settings.BLOCK_SIZE*0.7)))
+        else:
+            if len(self.bodies > 1):
+                del self.bodies[-1]
+        self.grid[pos[0]][pos[1]] = correct or len(self.bodies)==1
 
     def collide(self, pos):
         collided = False

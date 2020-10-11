@@ -9,6 +9,7 @@ img = py.transform.scale(img, (settings.BLOCK_SIZE, settings.BLOCK_SIZE))
 
 class Apple:
     def __init__(self, text, grid):
+        self.text = text
         self.surface = img.convert_alpha()
         self.surface.blit(settings.text_surface(text), (0, 0))
         self.position = (random.randint(0, settings.NUM_ROWS_COLUMNS-1), random.randint(0, settings.NUM_ROWS_COLUMNS-1))
