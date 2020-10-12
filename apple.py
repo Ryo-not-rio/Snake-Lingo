@@ -12,9 +12,9 @@ class Apple:
         self.text = text
         self.surface = img.convert_alpha()
         self.surface.blit(settings.text_surface(text), (0, 0))
-        self.position = (random.randint(0, settings.NUM_ROWS_COLUMNS-1), random.randint(0, settings.NUM_ROWS_COLUMNS-1))
+        self.position = (random.randint(0, settings.NUM_COLUMNS-1), random.randint(0, settings.NUM_ROWS-1))
         while grid[self.position[0]][self.position[1]]:
-            self.position = (random.randint(0, settings.NUM_ROWS_COLUMNS-1), random.randint(0, settings.NUM_ROWS_COLUMNS-1))
+            self.position = (random.randint(0, settings.NUM_COLUMNS-1), random.randint(0, settings.NUM_ROWS-1))
 
 
     def draw(self, display):

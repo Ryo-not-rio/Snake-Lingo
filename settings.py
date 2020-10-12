@@ -3,9 +3,10 @@ import numpy as np
 
 py.font.init()
 
-DISPLAY_SIZE = 800
-NUM_ROWS_COLUMNS = 8
-BLOCK_SIZE = int(DISPLAY_SIZE/NUM_ROWS_COLUMNS)
+DISPLAY_SIZE = (1000, 800)
+BLOCK_SIZE = 100
+NUM_ROWS = int(DISPLAY_SIZE[1]/BLOCK_SIZE)
+NUM_COLUMNS = int(DISPLAY_SIZE[0]/BLOCK_SIZE)
 FONT = py.font.SysFont('arial', 140)
 FONT2 = py.font.SysFont('arial_bold', 140)
 MOVES_PER_SECOND = 2

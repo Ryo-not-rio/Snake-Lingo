@@ -8,7 +8,7 @@ translator = Translator()
 #     r = f.read().split("\n")
 #     r = [list(filter(lambda x: x!="", l.split(" "))) for l in r]
 #     r = [l[0:2] for l in r]
-#     for l in r:
+#     for l in r:``
 #         lang_dict[l[0]] = l[1]
 #     print(lang_dict)
 
@@ -16,7 +16,8 @@ def get_word_pair(language):
     lang = lang_dict[language]
     lang_word = wordfreq.random_words(lang, nwords=1)
     eng_word = translator.translate(lang_word, src=lang, dest='en').text
-    if len(lang_word) > 10 or len(eng_word) > 10 or (len(lang_word) == 1 and len(eng_word) == 1):
+    if len(lang_word) > 10 or len(eng_word) > 10 or (len(lang_word) == 1 and len(eng_word) == 1) \
+        and lang_word != "00.00":
         lang_word, eng_word = get_word_pair(language)
 
     return lang_word, eng_word

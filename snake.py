@@ -82,10 +82,11 @@ class Snake():
 
         ### Check if gameover ###        
         if self.head.position[0] < 0 or \
-            self.head.position[0] >= settings.NUM_ROWS_COLUMNS or \
+            self.head.position[0] >= settings.NUM_COLUMNS or \
             self.head.position[1] < 0 or \
-            self.head.position[1] >= settings.NUM_ROWS_COLUMNS:
+            self.head.position[1] >= settings.NUM_ROWS:
             return True
+
         if self.grid[self.head.position[0]][self.head.position[1]]:
             return True
         ############################
@@ -109,10 +110,11 @@ class Snake():
         pos = tail.position[:]
         if correct:
             self.bodies.append(SnakeBod(text, pos, tail.rotation, tail.vel[:], img=body_img, text_size=int(settings.BLOCK_SIZE*0.7)))
+            self.grid[pos[0]][pos[1]] = correct
         else:
-            if len(self.bodies > 1):
+            if len(self.bodies) > 1:
                 del self.bodies[-1]
-        self.grid[pos[0]][pos[1]] = correct or len(self.bodies)==1
+                self.grid[pos[0]][pos[1]] = correct
 
     def collide(self, pos):
         collided = False

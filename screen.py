@@ -6,7 +6,7 @@ import button
 
 class Screen:
     def __init__(self, bg_colour=py.Color('white'), size=settings.DISPLAY_SIZE, alpha=255):
-        self.surface = py.Surface((size, size), py.SRCALPHA)
+        self.surface = py.Surface(size, py.SRCALPHA)
         bg_colour.a = alpha
         self.surface.fill(bg_colour)
         # self.surface.fill(bg_colour)
