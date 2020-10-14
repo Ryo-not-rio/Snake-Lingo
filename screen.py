@@ -15,7 +15,9 @@ class Screen:
     def click(self, pos):
         for obj in self.objects:
             if isinstance(obj, button.Button):
-                obj.click(pos)
+                clicked = obj.click(pos)
+                if clicked:
+                    return clicked
 
     def draw(self, display):
         for obj in self.objects:

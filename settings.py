@@ -7,8 +7,8 @@ DISPLAY_SIZE = (1000, 800)
 BLOCK_SIZE = 100
 NUM_ROWS = int(DISPLAY_SIZE[1]/BLOCK_SIZE)
 NUM_COLUMNS = int(DISPLAY_SIZE[0]/BLOCK_SIZE)
-FONT = py.font.SysFont('arial', 140)
-FONT2 = py.font.SysFont('arial_bold', 140)
+FONT = py.font.SysFont('arial_unicode', 140)
+FONT2 = py.font.SysFont('arial_unicode_bold', 140)
 MOVES_PER_SECOND = 2
 FPS = 60
 
@@ -16,6 +16,7 @@ def grid_to_pos(grid_pos):
     return [BLOCK_SIZE*i for i in grid_pos]
 
 def text_surface(text, surf_shape=(BLOCK_SIZE, BLOCK_SIZE), size=BLOCK_SIZE, bold=False):
+    text = text
     if bold:
         surface = FONT2.render(text, False, py.Color('black'))
     else:

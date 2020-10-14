@@ -14,7 +14,8 @@ class Button():
 
     def click(self, pos):
         if self.surface.get_rect().move(self.position).collidepoint(pos):
-            self.action()
+            return self.action()
 
     def draw(self, display):
         display.blit(self.surface, self.position)
+        

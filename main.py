@@ -7,6 +7,7 @@ import snake
 import apple
 import words
 import gameover
+import main_menu
 
 py.init()
 
@@ -16,22 +17,22 @@ clock = py.time.Clock()
 # TODO :: Main menu
 # TODO :: TTS
 # TODO :: Variable speed
-# TODO :: change colour of snake
+# TODO :: change colour of snake & show correct answer
 # TODO :: Sound & Music
 
 
-
 class Main:
-    def __init__(self):
+    def __init__(self, language="English"):
         self.game_exit = False
-        self.game_over = False
+        # 0: main menu, 1: game, 2: gameover
+        self.game_state = 0
         self.prev_move = time.time()
 
         self.grid = [[False for j in range(settings.NUM_ROWS)] for i in range(settings.NUM_COLUMNS)]
 
-        self.language = "French"
+        self.language = language
         self.word_generator = words.WordGenerator(self.language)
-        self.word, self.answer = None, None
+        self.word, self.answer = "temp", "temp"
         self.apple_num = 3
         self.apples = []
         self.reset_apples()
@@ -39,6 +40,7 @@ class Main:
         self.snake_obj = snake.Snake(self.word, self.grid)
 
         self.game_over_screen = gameover.GameOver()
+        self.main_menu_screen = main_menu.MainMenu()
 
 
     def reset_apples(self):
@@ -61,8 +63,9 @@ class Main:
             self.directions = []
 
         ## moving ##
-        self.game_over = self.snake_obj.move()
-        if self.game_over:
+        game_over = self.snake_obj.move()
+        if game_over:
+            self.game_state = 2
             return
 
         ## apples ##
@@ -94,14 +97,21 @@ class Main:
                         self.directions.append((0, 1))
 
                 if event.type == py.MOUSEBUTTONUP:
-                    if self.game_over:
-                        pos = py.mouse.get_pos()
-                        self.game_over = self.game_over_screen.click(pos)
-                        if not self.game_over:
-                            self.__init__()
+                    pos = py.mouse.get_pos()
+                    if self.game_state == 2:
+                        game_over = self.game_over_screen.click(pos)
+                        if not game_over:
+                            self.__init__(self.language)
+                            self.game_state = 0
+                    elif self.game_state == 0:
+                        lang = self.main_menu_screen.click(pos)
+                        if lang is not None:
+                            self.__init__(lang)
+                            self.game_state = 1
 
-                
-            if not self.game_over:
+            if self.game_state == 0:
+                self.main_menu_screen.draw(display)  
+            elif self.game_state == 1:
                 if time.time() - self.prev_move > 1/settings.MOVES_PER_SECOND:
                     self.each_move()
 
@@ -119,7 +129,7 @@ class Main:
                     apple_obj.draw(display)
 
                 self.snake_obj.draw(display)
-            else:
+            elif self.game_state == 2:
                 self.game_over_screen.draw(display)
 
             py.display.update()
