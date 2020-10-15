@@ -1,6 +1,7 @@
 from googletrans import Translator
 import wordfreq
 import random
+import threading
 
 lang_dict = {'Bulgarian': 'bg', 'Catalan': 'ca',
              'Czech': 'cs', 'Danish': 'da', 'Dutch': 'nl', 'English': 'en', 'Finnish': 'fi', 'French': 'fr', 
@@ -31,9 +32,11 @@ class WordGenerator:
     def __init__(self, language):
         self.language = language
         self.dict = {}
+
         for i in range(20):
             pair = get_word_pair(language)
             self.dict[pair[0]] = pair[1]
+
 
     def get_word(self):
         return random.choice(list(self.dict.items()))

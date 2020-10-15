@@ -1,6 +1,7 @@
 import pygame as py
 import time
 import random
+import os
 
 import settings
 import snake
@@ -9,6 +10,7 @@ import words
 import gameover
 import main_menu
 
+py.mixer.init(buffer=64)
 py.init()
 
 display = py.display.set_mode(settings.DISPLAY_SIZE)
@@ -20,9 +22,15 @@ clock = py.time.Clock()
 # TODO :: Sound & Music
 # TODO :: Animate
 
+correct_sound = py.mixer.Sound(os.path.join("sounds", "correct.wav"))
+wrong_sound = py.mixer.Sound(os.path.join("sounds", "wrong.wav"))
+
+music = py.mixer.music.load(os.path.join("sounds", "music.wav"))
+py.mixer.music.set_volume(0.5)
+py.mixer.music.play(-1)
 
 class Main:
-    def __init__(self, language="English"):
+    def __init__(self, language=None):
         self.game_exit = False
         # 0: main menu, 1: game, 2: gameover
         self.game_state = 0
@@ -31,14 +39,16 @@ class Main:
         self.grid = [[False for j in range(settings.NUM_ROWS)] for i in range(settings.NUM_COLUMNS)]
 
         self.language = language
-        self.word_generator = words.WordGenerator(self.language)
+        if language is not None:
+            self.word_generator = words.WordGenerator(self.language)
         self.word, self.answer = "temp", "temp"
         self.apple_num = 3
         self.apples = []
         self.temp_apple = None
         self.temp_start = None
 
-        self.reset_apples()
+        if language is not None:
+            self.reset_apples()
         self.directions = []
         self.snake_obj = snake.Snake(self.word, self.grid)
 
@@ -78,11 +88,13 @@ class Main:
                 correct = apple_obj.text == self.answer
                 self.snake_obj.eat(self.word, correct)
                 if correct:
+                    py.mixer.Sound.play(correct_sound)
                     if settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length() == 0:
                         self.game_state = 2
                     if settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length() < self.apple_num:
                         self.apple_num = settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length()
                 else:
+                    py.mixer.Sound.play(wrong_sound)
                     self.temp_apple = self.apples[0]
                     self.temp_apple.change_img()
                     self.temp_start = time.time()
