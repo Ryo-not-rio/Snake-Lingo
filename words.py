@@ -2,11 +2,11 @@ from googletrans import Translator
 import wordfreq
 import random
 
-lang_dict = {'Bosnian': 'bs', 'Bulgarian': 'bg', 'Catalan': 'ca', 'Croatian': 'hr',
+lang_dict = {'Bulgarian': 'bg', 'Catalan': 'ca',
              'Czech': 'cs', 'Danish': 'da', 'Dutch': 'nl', 'English': 'en', 'Finnish': 'fi', 'French': 'fr', 
              'German': 'de', 'Greek': 'el', 'Hungarian': 'hu', 'Indonesian': 'id', 
              'Italian': 'it', 'Latvian': 'lv', 'Macedonian': 'mk', 'Malay': 'ms', 
-             'Norwegian': 'nb', 'Polish': 'pl', 'Portuguese': 'pt', 'Romanian': 'ro', 'Russian': 'ru', 
+             'Polish': 'pl', 'Portuguese': 'pt', 'Romanian': 'ro', 'Russian': 'ru', 
              'Serbian': 'sr', 'Spanish': 'es', 'Swedish': 'sv', 'Turkish': 'tr', 'Ukrainian': 'uk'}
 translator = Translator()
 # with open("list.txt") as f:

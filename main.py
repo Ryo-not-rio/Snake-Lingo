@@ -15,10 +15,10 @@ display = py.display.set_mode(settings.DISPLAY_SIZE)
 clock = py.time.Clock()
 
 # TODO :: Main menu
-# TODO :: TTS
 # TODO :: Variable speed
 # TODO :: change colour of snake & show correct answer
 # TODO :: Sound & Music
+# TODO :: Animate
 
 
 class Main:
@@ -35,6 +35,9 @@ class Main:
         self.word, self.answer = "temp", "temp"
         self.apple_num = 3
         self.apples = []
+        self.temp_apple = None
+        self.temp_start = None
+
         self.reset_apples()
         self.directions = []
         self.snake_obj = snake.Snake(self.word, self.grid)
@@ -74,6 +77,15 @@ class Main:
             if self.grid[apple_obj.position[0]][apple_obj.position[1]]:
                 correct = apple_obj.text == self.answer
                 self.snake_obj.eat(self.word, correct)
+                if correct:
+                    if settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length() == 0:
+                        self.game_state = 2
+                    if settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length() < self.apple_num:
+                        self.apple_num = settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length()
+                else:
+                    self.temp_apple = self.apples[0]
+                    self.temp_apple.change_img()
+                    self.temp_start = time.time()
                 self.reset_apples()
                 self.snake_obj.change_text(self.word)
 
@@ -129,6 +141,12 @@ class Main:
                     apple_obj.draw(display)
 
                 self.snake_obj.draw(display)
+
+                if self.temp_apple is not None:
+                    self.temp_apple.draw(display)
+                    if time.time() - self.temp_start > 1.1:
+                        self.temp_apple = None
+
             elif self.game_state == 2:
                 self.game_over_screen.draw(display)
 

@@ -1,15 +1,14 @@
 import pygame as py
 import numpy as np
 import os
-import talkey
+import pyttsx3
+import threading
 
 import settings
 import words
 
+tts = pyttsx3.init()
 
-tts = talkey.Talkey(
-    preferred_languages=words.lang_dict.values()
-)
 head_img = py.image.load(os.path.join("images", "snake_head.png"))
 head_img = py.transform.scale(head_img, (settings.BLOCK_SIZE, settings.BLOCK_SIZE))
 body_img = py.image.load(os.path.join("images", "snake_body.png"))
@@ -55,8 +54,10 @@ class Snake():
         self.head = self.bodies[0]
         self.waited = False
         self.rotations = []
-        self.change_text(text)
-    
+
+    def length(self):
+        return len(self.bodies)
+
     def move(self):
         for i in range(0, len(self.bodies)-1):
             index = len(self.bodies)-1-i
@@ -131,6 +132,7 @@ class Snake():
 
     def change_text(self, text):
         self.bodies[0].change_text(text)
+        
 
     def animate(self):
         pixel = settings.BLOCK_SIZE/(settings.FPS/settings.MOVES_PER_SECOND)
