@@ -3,28 +3,28 @@ import numpy as np
 import os
 import pyttsx3
 import threading
+import random
 
 import settings
 import words
 
+
 tts = pyttsx3.init()
 
-head_img = py.image.load(os.path.join("images", "snake_head.png"))
-head_img = py.transform.scale(head_img, (settings.BLOCK_SIZE, settings.BLOCK_SIZE))
+
+head_imgs = [settings.load_img("snake_head{}.png".format(n), (settings.BLOCK_SIZE, settings.BLOCK_SIZE)) for n in range(1, 8)]
 body_img = py.image.load(os.path.join("images", "snake_body.png"))
 body_img = py.transform.scale(body_img, (settings.BLOCK_SIZE, settings.BLOCK_SIZE))
 
 class SnakeBod:
     def __init__(self, text, position, rotation, velocity, img=None, bold=False, text_size=settings.BLOCK_SIZE):
-        self.original_surface = py.Surface((settings.BLOCK_SIZE, settings.BLOCK_SIZE), py.SRCALPHA)
         self.img = img
-        if self.img is not None:
-            self.img = self.img.convert_alpha()
-            self.original_surface.blit(self.img, (0, 0))
-
-        self.original_surface.blit(settings.text_surface(text, size=text_size, bold=bold), (0, 0))
+        self.text = text
         self.text_size = text_size
         self.bold = bold
+        self.create_surface()
+        if img in head_imgs:
+            self.change_img()
         self.rotation = rotation
         self.position = position
         self.prev_pos = position
@@ -32,15 +32,29 @@ class SnakeBod:
         self.pixel_wait = 0
         self.vel = velocity
 
+    def create_surface(self):
+        self.original_surface = py.Surface((settings.BLOCK_SIZE, settings.BLOCK_SIZE), py.SRCALPHA)
+        if self.img is not None:
+            self.img = self.img.convert_alpha()
+            self.original_surface.blit(self.img, (0, 0))
+        
+        try:
+            self.original_surface.blit(settings.text_surface(self.text, size=self.text_size, bold=self.bold), (0, 0))
+        except py.error:
+            pass
+
     def collide(self, pos):
         return self.position == list(pos)
 
     def change_text(self, text):
-        self.original_surface = py.Surface((settings.BLOCK_SIZE, settings.BLOCK_SIZE), py.SRCALPHA)
-        if self.img is not None:
-            self.original_surface.blit(self.img, (0, 0))
+        self.text = text
+        self.create_surface()
 
-        self.original_surface.blit(settings.text_surface(text, size=self.text_size, bold=self.bold), (0, 0))
+    def change_img(self):
+        self.img = random.choice(head_imgs)
+        self.create_surface()
+        timer = threading.Timer(1, self.change_img)
+        timer.start()
 
     def draw(self, display):
         display.blit(py.transform.rotate(self.original_surface, self.rotation), [int(c) for c in self.pixel_position])
@@ -49,7 +63,7 @@ class Snake():
     def __init__(self, text, grid):
         self.grid = grid
         initial_pos = (5, 5)
-        self.bodies = [SnakeBod(text, initial_pos, 0, (0, 0), img=head_img, bold=True)]
+        self.bodies = [SnakeBod(text, initial_pos, 0, (0, 0), img=head_imgs[0], bold=True)]
         self.grid[initial_pos[0]][initial_pos[1]] = True
         self.head = self.bodies[0]
         self.waited = False

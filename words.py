@@ -8,7 +8,7 @@ lang_dict = {'Bulgarian': 'bg', 'Catalan': 'ca',
              'German': 'de', 'Greek': 'el', 'Hungarian': 'hu', 'Indonesian': 'id', 
              'Italian': 'it', 'Latvian': 'lv', 'Macedonian': 'mk', 'Malay': 'ms', 
              'Polish': 'pl', 'Portuguese': 'pt', 'Romanian': 'ro', 'Russian': 'ru', 
-             'Serbian': 'sr', 'Spanish': 'es', 'Swedish': 'sv', 'Turkish': 'tr', 'Ukrainian': 'uk'}
+             'Serbian': 'sh', 'Spanish': 'es', 'Swedish': 'sv', 'Turkish': 'tr', 'Ukrainian': 'uk'}
 translator = Translator()
 # with open("list.txt") as f:
 #     r = f.read().split("\n")
@@ -22,8 +22,10 @@ def get_word_pair(language):
     lang = lang_dict[language]
     lang_word = wordfreq.random_words(lang, nwords=1)
     eng_word = translator.translate(lang_word, src=lang, dest='en').text
+    
+    # Recursion happening here
     if len(lang_word) > 10 or len(eng_word) > 10 or (len(lang_word) == 1 and len(eng_word) == 1) \
-        and lang_word not in ["00:00", "0:00", "000.000"]:
+        or (language != "English" and lang_word == eng_word) or lang_word[0].isupper():
         lang_word, eng_word = get_word_pair(language)
 
     return lang_word, eng_word
@@ -32,13 +34,48 @@ class WordGenerator:
     def __init__(self, language):
         self.language = language
         self.dict = {}
+        self.correct_row_dict = {}
+        self.wrong_list = []
+        self.use_wrong_list = False
 
-        for i in range(20):
+        for i in range(30):
             pair = get_word_pair(language)
             self.dict[pair[0]] = pair[1]
 
 
-    def get_word(self):
+    def correct(self, word):
+        if self.use_wrong_list:
+            self.wrong_list.remove(word)
+            if len(self.wrong_list) == 0:
+                self.use_wrong_list = False
+        else:
+            if word in self.correct_row_dict.keys():
+                self.correct_row_dict[word] += 1
+                if self.correct_row_dict[word] == 3:
+                    del self.dict[word]
+                    def temp():
+                        pair = get_word_pair(self.language)
+                        self.dict[pair[0]] = pair[1]
+                        print(pair)
+                    t = threading.Thread(target=temp)
+                    t.start()               
+            else:
+                self.correct_row_dict[word] = 1
+
+    
+    def wrong(self, word):
+        if word in self.correct_row_dict.keys():
+            del self.correct_row_dict[word]
+
+        if not self.use_wrong_list:
+            self.wrong_list.append(word)
+            if len(self.wrong_list) >= 5:
+                self.use_wrong_list = True
+
+    def get_word(self, answer=False):
+        if self.use_wrong_list and answer:
+            lang_word = random.choice(self.wrong_list)
+            return (lang_word, self.dict[lang_word])
         return random.choice(list(self.dict.items()))
 
     

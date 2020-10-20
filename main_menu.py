@@ -7,7 +7,7 @@ import settings
 
 class MainMenu(screen.Screen):
     def __init__(self):
-        super().__init__()
+        super().__init__(alpha=30)
         languages = words.lang_dict
 
         title_shape = (600, 100)

@@ -1,5 +1,6 @@
 import pygame as py
 import numpy as np
+import os
 
 py.font.init()
 
@@ -30,4 +31,9 @@ def text_surface(text, surf_shape=(BLOCK_SIZE, BLOCK_SIZE), size=BLOCK_SIZE, bol
     return_surface.blit(text_surface, position_in_return_surface)
     return return_surface
 
+
+def load_img(file, shape):
+    img = py.image.load(os.path.join("images", file))
+    img = py.transform.scale(img, shape)
+    return img
 
