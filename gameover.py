@@ -5,12 +5,19 @@ import screen
 import button
 
 class GameOver(screen.Screen) :
-    def __init__(self):
+    def __init__(self, stats_collector):
         super().__init__(alpha=20)
         text_size = settings.BLOCK_SIZE * 5
         x_pos = int((settings.DISPLAY_SIZE[0] - text_size)/2)
-        self.surface.blit(settings.text_surface("GameOver", surf_shape=(text_size, int(text_size/2)), size=text_size, bold=True), (x_pos, 100))
+        self.surface.blit(settings.text_surface("GameOver", surf_shape=(text_size, int(text_size/3)), size=text_size, bold=True), (x_pos, 10))
+        self.stats_collector = stats_collector
 
         but_shape = (settings.BLOCK_SIZE * 2, settings.BLOCK_SIZE)
-        but = button.Button("Play Again!", lambda: False, but_shape, (int((settings.DISPLAY_SIZE[0] - but_shape[0])/2), 400))
+        but = button.Button("Play Again!", lambda: False, but_shape, (int((settings.DISPLAY_SIZE[0] - but_shape[0])/2), 600))
         self.objects.append(but)
+
+    def draw(self, display):
+        surf_shape = (700, 400)
+        pos = (int((settings.DISPLAY_SIZE[0]-surf_shape[0])/2), 180)
+        self.surface.blit(self.stats_collector.get_surf(shape=surf_shape), pos)
+        super().draw(display)

@@ -31,7 +31,9 @@ def get_word_pair(language):
     return lang_word, eng_word
 
 class WordGenerator:
-    def __init__(self, language):
+    def __init__(self, language, stats_collector):
+        self.stats_collector = stats_collector
+
         self.language = language
         self.dict = {}
         self.correct_row_dict = {}
@@ -44,6 +46,7 @@ class WordGenerator:
 
 
     def correct(self, word):
+        event = ["correct"]
         if self.use_wrong_list:
             self.wrong_list.remove(word)
             if len(self.wrong_list) == 0:
@@ -62,8 +65,11 @@ class WordGenerator:
             else:
                 self.correct_row_dict[word] = 1
 
+        self.stats_collector.events.append(event)
+
     
     def wrong(self, word):
+        event = ["wrong"]
         if word in self.correct_row_dict.keys():
             del self.correct_row_dict[word]
 
@@ -71,6 +77,7 @@ class WordGenerator:
             self.wrong_list.append(word)
             if len(self.wrong_list) >= 5:
                 self.use_wrong_list = True
+        self.stats_collector.events.append(event)
 
     def get_word(self, answer=False):
         if self.use_wrong_list and answer:

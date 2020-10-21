@@ -11,6 +11,7 @@ import words
 import gameover
 import main_menu
 import loading
+import stats
 
 py.mixer.init(buffer=64)
 py.init()
@@ -41,9 +42,11 @@ class Main:
 
         self.grid = [[False for j in range(settings.NUM_ROWS)] for i in range(settings.NUM_COLUMNS)]
 
+        self.stats_collector = stats.Stats()
+
         self.language = language
         if language is not None:
-            self.word_generator = words.WordGenerator(self.language)
+            self.word_generator = words.WordGenerator(self.language, self.stats_collector)
         self.word, self.answer = "Temp", "Temp"
         self.apple_num = 3
         self.apples = []
@@ -58,7 +61,7 @@ class Main:
         self.directions = []
         
 
-        self.game_over_screen = gameover.GameOver()
+        self.game_over_screen = gameover.GameOver(self.stats_collector)
         self.main_menu_screen = main_menu.MainMenu()
         self.loading_screen = loading.Loading()
 
@@ -113,6 +116,7 @@ class Main:
                     self.temp_apple = self.apples[0]
                     self.temp_apple.change_img()
                     self.temp_start = time.time()
+
                 self.reset_apples()
                 self.snake_obj.change_text(self.word)
 
