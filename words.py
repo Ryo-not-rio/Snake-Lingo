@@ -55,11 +55,17 @@ class WordGenerator:
             if word in self.correct_row_dict.keys():
                 self.correct_row_dict[word] += 1
                 if self.correct_row_dict[word] == 3:
+                    ### learnt!! ###
                     del self.dict[word]
+                    while word in self.wrong_list:
+                        wrong_list.remove(word)
+
+                    event.append("learnt")
+
                     def temp():
                         pair = get_word_pair(self.language)
                         self.dict[pair[0]] = pair[1]
-                        print(pair)
+                    
                     t = threading.Thread(target=temp)
                     t.start()               
             else:

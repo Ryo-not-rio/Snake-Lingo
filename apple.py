@@ -6,6 +6,8 @@ import settings
 
 img = py.image.load(os.path.join("images", "apple.png"))
 img = py.transform.scale(img, (settings.BLOCK_SIZE, settings.BLOCK_SIZE))
+# img = img.convert()
+# display.blit(img, position)
 correct_img = py.image.load(os.path.join("images", "apple_correct.png"))
 correct_img = py.transform.scale(correct_img, (settings.BLOCK_SIZE, settings.BLOCK_SIZE))
 

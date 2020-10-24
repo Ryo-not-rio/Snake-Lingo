@@ -13,7 +13,7 @@ class GameOver(screen.Screen) :
         self.stats_collector = stats_collector
 
         but_shape = (settings.BLOCK_SIZE * 2, settings.BLOCK_SIZE)
-        but = button.Button("Play Again!", lambda: False, but_shape, (int((settings.DISPLAY_SIZE[0] - but_shape[0])/2), 600))
+        but = button.Button("Play Again!", lambda: True, but_shape, (int((settings.DISPLAY_SIZE[0] - but_shape[0])/2), 600))
         self.objects.append(but)
 
     def draw(self, display):

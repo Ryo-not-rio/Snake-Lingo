@@ -28,7 +28,7 @@ turn_sound = py.mixer.Sound(os.path.join("sounds", "turn.wav"))
 
 music = py.mixer.music.load(os.path.join("sounds", "music.mp3"))
 py.mixer.music.set_volume(0.8)
-py.mixer.music.play(-1)
+# py.mixer.music.play(-1)
 
 back_img = py.image.load(os.path.join("images", "back.png"))
 back_img = py.transform.scale(back_img, settings.DISPLAY_SIZE).convert()
@@ -109,7 +109,7 @@ class Main:
                     if settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length() < self.apple_num:
                         self.apple_num = settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length()
                     if self.snake_obj.length() % 10 == 0:
-                        settings.MOVES_PER_SECOND *= 1.1
+                        settings.MOVES_PER_SECOND += 0.4
                 else:
                     py.mixer.Sound.play(wrong_sound)
                     self.word_generator.wrong(self.word)
@@ -172,8 +172,8 @@ class Main:
                 if event.type == py.MOUSEBUTTONUP:
                     pos = py.mouse.get_pos()
                     if self.game_state == 2:
-                        game_over = self.game_over_screen.click(pos)
-                        if not game_over:
+                        again = self.game_over_screen.click(pos)
+                        if again is not None:
                             self.__init__(None)
                             self.game_state = 0
                     elif self.game_state == 0:

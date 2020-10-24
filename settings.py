@@ -16,12 +16,12 @@ FPS = 60
 def grid_to_pos(grid_pos):
     return [BLOCK_SIZE*i for i in grid_pos]
 
-def text_surface(text, surf_shape=(BLOCK_SIZE, BLOCK_SIZE), size=BLOCK_SIZE, bold=False):
+def text_surface(text, surf_shape=(BLOCK_SIZE, BLOCK_SIZE), size=BLOCK_SIZE, bold=False, colour=py.Color('black')):
     text = text
     if bold:
-        surface = FONT2.render(text, False, py.Color('black'))
+        surface = FONT2.render(text, False, colour)
     else:
-        surface = FONT.render(text, False, py.Color('black'))
+        surface = FONT.render(text, False, colour)
     surface_size = surface.get_size()
     ratio = min(np.array((size, size))/np.array(surface_size))
     new_size = np.array(surface_size) * ratio
