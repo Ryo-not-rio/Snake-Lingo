@@ -28,7 +28,13 @@ class Stats:
         self.keys = ["Correct Rate", "Learnt words", "Snake length"]
         self.non_show = ["wrong"]
         self.average_list = ["correct"]
-        self.colours = [py.Color('blue'), py.Color('darkgreen'), py.Color('green')]
+        self.colours = [py.Color('blue'), py.Color('darkgreen'), py.Color('limegreen')]
+
+    def get_count(self, event_string):
+        c = 0
+        for event in self.events:
+            c += event.count(event_string)
+        return c
 
     def get_Ys(self):
         Ys = {w:[0] for w in self.allowed_events}
@@ -61,7 +67,7 @@ class Stats:
         key_height = 30
 
         back_surf = py.Surface(shape, py.SRCALPHA)
-        padding = 10
+        padding = 20
         text_width = shape[0]/len(self.allowed_events) - padding
         for i, t in enumerate(self.allowed_events):
             t_surf = settings.text_surface(self.keys[i], size=text_width, surf_shape=(int(text_width), key_height), colour=self.colours[i])

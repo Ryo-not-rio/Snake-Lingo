@@ -109,7 +109,7 @@ class Main:
                     if settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length() < self.apple_num:
                         self.apple_num = settings.NUM_ROWS*settings.NUM_COLUMNS - self.snake_obj.length()
                     if self.snake_obj.length() % 10 == 0:
-                        settings.MOVES_PER_SECOND += 0.4
+                        settings.MOVES_PER_SECOND += 0.3
                 else:
                     py.mixer.Sound.play(wrong_sound)
                     self.word_generator.wrong(self.word)

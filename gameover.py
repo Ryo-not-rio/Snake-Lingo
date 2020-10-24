@@ -9,8 +9,17 @@ class GameOver(screen.Screen) :
         super().__init__(alpha=20)
         text_size = settings.BLOCK_SIZE * 5
         x_pos = int((settings.DISPLAY_SIZE[0] - text_size)/2)
-        self.surface.blit(settings.text_surface("GameOver", surf_shape=(text_size, int(text_size/3)), size=text_size, bold=True), (x_pos, 10))
+        self.surface.blit(settings.text_surface("GameOver", surf_shape=(text_size, int(text_size/4)), size=text_size, bold=True), (x_pos, 10))
         self.stats_collector = stats_collector
+
+        text_size = settings.BLOCK_SIZE * 4
+        x_pos = int((settings.DISPLAY_SIZE[0] - text_size)/2)
+        learnt_count = stats_collector.get_count("learnt")
+        self.surface.blit(settings.text_surface("You learned {} words!!".format(learnt_count),
+                                                surf_shape=(text_size, int(text_size/3)), 
+                                                size=text_size, bold=True,
+                                                colour=py.Color('darkorange')),
+                                                (x_pos, 80))
 
         but_shape = (settings.BLOCK_SIZE * 2, settings.BLOCK_SIZE)
         but = button.Button("Play Again!", lambda: True, but_shape, (int((settings.DISPLAY_SIZE[0] - but_shape[0])/2), 600))
