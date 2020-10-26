@@ -21,6 +21,8 @@ translator = Translator()
 def get_word_pair(language):
     lang = lang_dict[language]
     lang_word = wordfreq.random_words(lang, nwords=1)
+    while lang_word is None:
+        lang_word = wordfreq.random_words(lang, nwords=1)
     eng_word = translator.translate(lang_word, src=lang, dest='en').text
     
     # Recursion happening here
@@ -81,7 +83,7 @@ class WordGenerator:
 
         if not self.use_wrong_list:
             self.wrong_list.append(word)
-            if len(self.wrong_list) >= 5:
+            if len(self.wrong_list) >= 4:
                 self.use_wrong_list = True
         self.stats_collector.events.append(event)
 

@@ -1,12 +1,18 @@
 import pygame as py
+import os
 
 import screen
 import button
 import words
 import settings
 
+back_arrows_img = py.image.load(os.path.join("images", "back_arrows.png"))
+
+
 class MainMenu(screen.Screen):
     def __init__(self):
+        self.back_arrows_img = py.transform.scale(back_arrows_img, settings.DISPLAY_SIZE).convert()
+
         super().__init__(alpha=30)
         languages = words.lang_dict
 
@@ -25,3 +31,7 @@ class MainMenu(screen.Screen):
             button_x = button_x_padding/2 + (i%num_cols)*(button_shape[0]+button_x_padding)
             button_y = 300 + (button_shape[1]+8)*(i // num_cols)
             self.objects.append(button.Button(lang, lambda lang=lang: lang, button_shape, (button_x, button_y)))
+    
+    def draw(self, display):
+        display.blit(self.back_arrows_img, (0, 0))
+        super().draw(display)

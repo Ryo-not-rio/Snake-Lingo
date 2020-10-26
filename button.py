@@ -1,12 +1,14 @@
 import pygame as py
+import random
 
 import settings
 
 class Button():
     def __init__(self, text, action, shape, pos):
+        colour = py.Color("black")
         self.surface = py.Surface(shape)
         self.surface.fill(py.Color('white'))
-        py.draw.rect(self.surface, py.Color('black'), self.surface.get_rect(), 3)
+        py.draw.rect(self.surface, colour, self.surface.get_rect(), 3)
         self.text = settings.text_surface(text, surf_shape=shape, size=max(shape)-4)
         self.surface.blit(self.text, (0, 0))
         self.action = action
@@ -14,6 +16,7 @@ class Button():
 
     def click(self, pos):
         if self.surface.get_rect().move(self.position).collidepoint(pos):
+            self.surface.fill(py.Color('white'))
             return self.action()
 
     def draw(self, display):

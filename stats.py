@@ -25,10 +25,12 @@ class Stats:
     def __init__(self):
         self.events = [[]]
         self.allowed_events = ["correct", "learnt", "snake_len"]
-        self.keys = ["Correct Rate", "Learnt words", "Snake length"]
+        self.keys = ["Correct", "Learnt words", "Snake length"]
         self.non_show = ["wrong"]
         self.average_list = ["correct"]
         self.colours = [py.Color('blue'), py.Color('darkgreen'), py.Color('limegreen')]
+        self.snake_length = 1
+        self.checked_snakelen = False
 
     def get_count(self, event_string):
         c = 0
@@ -50,8 +52,12 @@ class Stats:
                 if w in event:
                     if w == "correct":
                         currents['snake_len'] += 1
+                        if not self.checked_snakelen:
+                            self.snake_length += 1
                     elif w == "wrong" and currents['snake_len'] > 1:
                         currents['snake_len'] -= 1
+                        if not self.checked_snakelen:
+                            self.snake_length -= 1
 
                     if w not in self.non_show:
                         currents[w] += 1
@@ -60,24 +66,31 @@ class Stats:
                     add_value = currents[w]/total if w in self.average_list else currents[w]
                     Ys[w].append(add_value)
 
+        self.checked_snakelen = True
         return Ys
     
 
     def get_surf(self, shape=(800, 800)):
-        key_height = 30
+        Ys = self.get_Ys()
 
+        key_height = 30
         back_surf = py.Surface(shape, py.SRCALPHA)
         padding = 20
         text_width = shape[0]/len(self.allowed_events) - padding
         for i, t in enumerate(self.allowed_events):
-            t_surf = settings.text_surface(self.keys[i], size=text_width, surf_shape=(int(text_width), key_height), colour=self.colours[i])
+            if t == "snake_len":
+                count = self.snake_length
+            else:
+                count = self.get_count(t)
+            t_surf = settings.text_surface(self.keys[i] + ": {}".format(count),
+                                           size=text_width, surf_shape=(int(text_width), key_height),
+                                           colour=self.colours[i])
             back_surf.blit(t_surf, (int(i*(text_width+padding)), 0))
 
         surf = py.Surface((shape[0], shape[1]-key_height))
         surf.fill(py.Color('white'))
 
         x = range(len(self.events))
-        Ys = self.get_Ys()
         #print(Ys['snake_len'])
         for i, y in enumerate(list(Ys.values())):
             if len(x) > 0 and len(y) > 0:    
