@@ -2,6 +2,8 @@ from googletrans import Translator
 import wordfreq
 import random
 import threading
+import pygame as py
+import os
 
 lang_dict = {'Bulgarian': 'bg', 'Catalan': 'ca',
              'Czech': 'cs', 'Danish': 'da', 'Dutch': 'nl', 'English': 'en', 'Finnish': 'fi', 'French': 'fr', 
@@ -18,6 +20,7 @@ translator = Translator()
 #         lang_dict[l[0]] = l[1]
 #     print(lang_dict)
 
+
 def get_word_pair(language):
     lang = lang_dict[language]
     lang_word = wordfreq.random_words(lang, nwords=1)
@@ -33,7 +36,10 @@ def get_word_pair(language):
     return lang_word, eng_word
 
 class WordGenerator:
-    def __init__(self, language, stats_collector):
+    def __init__(self, language, stats_collector, reversed=False):
+        self.learnt_sound = py.mixer.Sound(os.path.join("sounds", "learnt.wav"))
+
+        self.reverse = reversed
         self.stats_collector = stats_collector
 
         self.language = language
@@ -42,7 +48,7 @@ class WordGenerator:
         self.wrong_list = []
         self.use_wrong_list = False
 
-        for i in range(30):
+        for i in range(20):
             pair = get_word_pair(language)
             self.dict[pair[0]] = pair[1]
 
@@ -58,6 +64,8 @@ class WordGenerator:
                 self.correct_row_dict[word] += 1
                 if self.correct_row_dict[word] == 3:
                     ### learnt!! ###
+                    py.mixer.Sound.play(self.learnt_sound)
+
                     del self.dict[word]
                     while word in self.wrong_list:
                         wrong_list.remove(word)
@@ -88,9 +96,15 @@ class WordGenerator:
         self.stats_collector.events.append(event)
 
     def get_word(self, answer=False):
+        if not self.reverse:
+            if self.use_wrong_list and answer:
+                lang_word = random.choice(self.wrong_list)
+                return (lang_word, self.dict[lang_word])
+            return random.choice(list(self.dict.items()))
+        
         if self.use_wrong_list and answer:
             lang_word = random.choice(self.wrong_list)
-            return (lang_word, self.dict[lang_word])
-        return random.choice(list(self.dict.items()))
+            return (self.dict[lang_word], lang_word)
+        return reversed(random.choice(list(self.dict.items()))[:])
 
     

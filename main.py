@@ -19,8 +19,6 @@ py.init()
 display = py.display.set_mode(settings.DISPLAY_SIZE)
 clock = py.time.Clock()
 
-# TODO :: change colour of snake & show correct answer
-# TODO :: Animate
 
 correct_sound = py.mixer.Sound(os.path.join("sounds", "correct.wav"))
 wrong_sound = py.mixer.Sound(os.path.join("sounds", "wrong.wav"))
@@ -34,7 +32,11 @@ back_img = py.image.load(os.path.join("images", "back.png"))
 back_img = py.transform.scale(back_img, settings.DISPLAY_SIZE).convert()
 
 class Main:
-    def __init__(self, language=None):
+    def __init__(self, language=None, reversed_btn=None):
+        reversed = False
+        if reversed_btn is not None:
+            reversed = reversed_btn.reversed
+
         self.game_exit = False
         # 0: main menu, 1: game, 2: gameover
         self.game_state = 0
@@ -46,7 +48,7 @@ class Main:
 
         self.language = language
         if language is not None:
-            self.word_generator = words.WordGenerator(self.language, self.stats_collector)
+            self.word_generator = words.WordGenerator(self.language, self.stats_collector, reversed)
         self.word, self.answer = "Temp", "Temp"
         self.apple_num = 3
         self.apples = []
@@ -183,7 +185,7 @@ class Main:
                             display.blit(back_img, (0, 0))
                             self.loading_screen.draw(display)
                             py.display.update()
-                            self.__init__(lang)
+                            self.__init__(lang[0], lang[1])
                             self.game_state = 1
 
 
