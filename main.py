@@ -33,6 +33,8 @@ back_img = py.transform.scale(back_img, settings.DISPLAY_SIZE).convert()
 
 class Main:
     def __init__(self, language=None, reversed_btn=None):
+        settings.MOVES_PER_SECOND = 2
+
         reversed = False
         if reversed_btn is not None:
             reversed = reversed_btn.reversed

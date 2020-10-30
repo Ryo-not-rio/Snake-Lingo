@@ -27,7 +27,7 @@ class Stats:
         self.allowed_events = ["correct", "learnt", "snake_len"]
         self.keys = ["Correct", "Learnt words", "Snake length"]
         self.non_show = ["wrong"]
-        self.average_list = ["correct"]
+        self.average_list = []
         self.colours = [py.Color('blue'), py.Color('darkgreen'), py.Color('limegreen')]
         self.snake_length = 1
         self.checked_snakelen = False

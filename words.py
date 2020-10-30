@@ -4,13 +4,14 @@ import random
 import threading
 import pygame as py
 import os
+import pickle
 
 lang_dict = {'Bulgarian': 'bg', 'Catalan': 'ca',
              'Czech': 'cs', 'Danish': 'da', 'Dutch': 'nl', 'English': 'en', 'Finnish': 'fi', 'French': 'fr', 
              'German': 'de', 'Greek': 'el', 'Hungarian': 'hu', 'Indonesian': 'id', 
              'Italian': 'it', 'Latvian': 'lv', 'Macedonian': 'mk', 'Malay': 'ms', 
-             'Polish': 'pl', 'Portuguese': 'pt', 'Romanian': 'ro', 'Russian': 'ru', 
-             'Serbian': 'sh', 'Spanish': 'es', 'Swedish': 'sv', 'Turkish': 'tr', 'Ukrainian': 'uk'}
+             'Polish': 'pl', 'Portuguese': 'pt', 'Romanian': 'ro', 'Russian': 'ru',
+             'Spanish': 'es', 'Swedish': 'sv', 'Turkish': 'tr', 'Ukrainian': 'uk'}
 translator = Translator()
 # with open("list.txt") as f:
 #     r = f.read().split("\n")
@@ -23,17 +24,41 @@ translator = Translator()
 
 def get_word_pair(language):
     lang = lang_dict[language]
-    lang_word = wordfreq.random_words(lang, nwords=1)
-    while lang_word is None:
+    try:
         lang_word = wordfreq.random_words(lang, nwords=1)
-    eng_word = translator.translate(lang_word, src=lang, dest='en').text
-    
-    # Recursion happening here
-    if len(lang_word) > 10 or len(eng_word) > 10 or (len(lang_word) == 1 and len(eng_word) == 1) \
-        or (language != "English" and lang_word == eng_word) or lang_word[0].isupper():
-        lang_word, eng_word = get_word_pair(language)
+        while lang_word is None:
+            lang_word = wordfreq.random_words(lang, nwords=1)
+        eng_word = translator.translate(lang_word, src=lang, dest='en').text
+        
+        # Recursion happening here
+        if len(lang_word) > 10 or len(eng_word) > 10 or (len(lang_word) == 1 and len(eng_word) == 1) \
+            or (language != "English" and lang_word == eng_word) or lang_word[0].isupper():
+            lang_word, eng_word = get_word_pair(language)
+    except:
+        with open("words.pkl", "rb") as f:
+            dictionary = pickle.load(f)
+        lang_word, eng_word = random.choice(dictionary[language])
 
     return lang_word, eng_word
+
+def create_local_file(num):
+    save_dict = {}
+    for language, lang in lang_dict.items():
+        save_dict[language] = []
+        for j in range(num):
+            lang_word = wordfreq.random_words(lang, nwords=1)
+            while lang_word is None:
+                lang_word = wordfreq.random_words(lang, nwords=1)
+            eng_word = translator.translate(lang_word, src=lang, dest='en').text
+            
+            # Recursion happening here
+            if len(lang_word) > 10 or len(eng_word) > 10 or (len(lang_word) == 1 and len(eng_word) == 1) \
+                or (language != "English" and lang_word == eng_word) or lang_word[0].isupper():
+                lang_word, eng_word = get_word_pair(language)
+
+            save_dict[language].append((lang_word, eng_word))
+    with open("words.pkl", "wb") as f:
+        pickle.dump(save_dict, f)
 
 class WordGenerator:
     def __init__(self, language, stats_collector, reversed=False):
@@ -108,3 +133,5 @@ class WordGenerator:
         return reversed(random.choice(list(self.dict.items()))[:])
 
     
+if __name__ == "__main__":
+    create_local_file(100)
