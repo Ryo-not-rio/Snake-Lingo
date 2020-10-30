@@ -14,7 +14,6 @@ class MainMenu(screen.Screen):
         self.back_arrows_img = py.transform.scale(back_arrows_img, settings.DISPLAY_SIZE).convert()
 
         super().__init__(alpha=30)
-        languages = words.lang_dict
 
         title_shape = (600, 100)
         title_surf = settings.text_surface("Snake-lingo", title_shape, size=title_shape[0], bold=True, colour=py.Color("darkgreen"))
@@ -25,6 +24,9 @@ class MainMenu(screen.Screen):
         custom = button.CustomButton("Reverse", shape, (x, 170))
         self.objects.append(custom)
 
+
+        languages = words.lang_dict
+
         button_shape = (150, 60)
         num_cols = 5
         full_button_width = settings.DISPLAY_SIZE[0]/num_cols
@@ -33,7 +35,8 @@ class MainMenu(screen.Screen):
         for i, lang in enumerate(languages.keys()):
             button_x = button_x_padding/2 + (i%num_cols)*(button_shape[0]+button_x_padding)
             button_y = 300 + (button_shape[1]+8)*(i // num_cols)
-            self.objects.append(button.Button(lang, lambda lang=lang: (lang, custom), button_shape, (button_x, button_y)))
+            btn = button.Button(lang, lambda lang=lang: (lang, custom), button_shape, (button_x, button_y), back_img=os.path.join("images", lang+".png"))
+            self.objects.append(btn)
     
     def draw(self, display):
         display.blit(self.back_arrows_img, (0, 0))
