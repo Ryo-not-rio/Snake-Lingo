@@ -82,11 +82,6 @@ Additionally, the game could be adapted for non-native English speakers.
 ### Prerequisites
 Python >= 3.6
 
-Dependencies can be installed by running the following command:
-```
-$ pip3 install -r requirements.txt
-```
-
 ### Installing
 1. Make sure you have python and the prerequisites installed
 
@@ -94,6 +89,16 @@ $ pip3 install -r requirements.txt
 
 ```
 $ git clone https://github.com/Ryo-not-rio/SnakeFlashCard.git
+```
+
+2.5 If you have downloaded the ZIP file, unzip it.
+
+3. Install the dependencies
+First, navigate to the downloaded folder of the project.
+
+Next, dependencies can be installed by running the following command:
+```
+$ pip3 install -r requirements.txt
 ```
 
 ## 🎈 Usage <a name="usage"></a>
