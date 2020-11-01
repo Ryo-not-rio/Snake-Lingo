@@ -95,7 +95,7 @@ Python >= 3.6
 2. Download the ZIP file from github directly or run the following:
 
     ```
-    $ git clone https://github.com/Ryo-not-rio/SnakeFlashCard.git
+    $ git clone https://github.com/Ryo-not-rio/Snake-Lingo.git
     ```
 
 3. If you have downloaded the ZIP file, unzip it.
