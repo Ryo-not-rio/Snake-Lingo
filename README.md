@@ -36,15 +36,16 @@ In this game, you are a snake trying to grow as long as possible. In order to do
 you have to eat as many apples as possible, but not just any apple that you find,
 you have to eat the correct apple that corresponds to the word on your head.
 
+### Controls
+To control the snake, use "W-A-S-D" or the arrow keys!
+
+### Game play
 In the game you will see a snake with a word from the foreign language on its head. That's you.
 Your objective is to eat the apple with the correct definition on it.
 If you eat the correct apple, you'll grow longer. Eat the wrong one, you'll shrink so be careful!
 
 Also, if you touch the walls or a part of your body with your head, it's game over.
 <img src="/images/game.PNG">
-
-
-#### To control the snake, use "W-A-S-D" or the arrow keys!
 
 ### Main menu
 When you start the game, you'll be taken to the main menu.
@@ -71,9 +72,7 @@ If you get too many words wrong, you will be shown those words over and over so 
 not overloaded with too many words.
 
 
-
 ## 🚀 Future Scope <a name = "future_scope"></a>
-
 This project would be an ideal mobile application as it is simple and is the type of game you would
 play on the subway or on the bus.
 
