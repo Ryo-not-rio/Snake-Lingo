@@ -91,9 +91,9 @@ Python >= 3.6
 $ git clone https://github.com/Ryo-not-rio/SnakeFlashCard.git
 ```
 
-2.5 If you have downloaded the ZIP file, unzip it.
+3. If you have downloaded the ZIP file, unzip it.
 
-3. Install the dependencies
+4. Install the dependencies
 First, navigate to the downloaded folder of the project.
 
 Next, dependencies can be installed by running the following command:
