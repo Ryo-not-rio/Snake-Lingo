@@ -7,7 +7,7 @@ import os
 import pickle
 
 lang_dict = {'Bulgarian': 'bg', 'Catalan': 'ca',
-             'Czech': 'cs', 'Danish': 'da', 'Dutch': 'nl', 'English': 'en', 'Finnish': 'fi', 'French': 'fr', 
+             'Czech': 'cs', 'Danish': 'da', 'Dutch': 'nl', 'Finnish': 'fi', 'French': 'fr', 
              'German': 'de', 'Greek': 'el', 'Hungarian': 'hu', 'Indonesian': 'id', 
              'Italian': 'it', 'Latvian': 'lv', 'Macedonian': 'mk', 'Malay': 'ms', 
              'Polish': 'pl', 'Portuguese': 'pt', 'Romanian': 'ro', 'Russian': 'ru',
@@ -91,7 +91,10 @@ class WordGenerator:
                     ### learnt!! ###
                     py.mixer.Sound.play(self.learnt_sound)
 
-                    del self.dict[word]
+                    if not self.reverse:
+                        del self.dict[word]
+                    else:
+                        self.dict = {key: value for key, value in self.dict.items() if value != word}
                     while word in self.wrong_list:
                         wrong_list.remove(word)
 
@@ -129,7 +132,9 @@ class WordGenerator:
         
         if self.use_wrong_list and answer:
             lang_word = random.choice(self.wrong_list)
-            return (self.dict[lang_word], lang_word)
+            for key, value in self.dict.items():
+                if value == lang_word:
+                    return (lang_word, key)
         return reversed(random.choice(list(self.dict.items()))[:])
 
     

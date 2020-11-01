@@ -26,7 +26,7 @@ turn_sound = py.mixer.Sound(os.path.join("sounds", "turn.wav"))
 
 music = py.mixer.music.load(os.path.join("sounds", "music.mp3"))
 py.mixer.music.set_volume(0.8)
-# py.mixer.music.play(-1)
+py.mixer.music.play(-1)
 
 back_img = py.image.load(os.path.join("images", "back.png"))
 back_img = py.transform.scale(back_img, settings.DISPLAY_SIZE).convert()

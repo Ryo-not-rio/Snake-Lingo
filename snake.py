@@ -1,16 +1,11 @@
 import pygame as py
 import numpy as np
 import os
-import pyttsx3
 import threading
 import random
 
 import settings
 import words
-
-
-tts = pyttsx3.init()
-
 
 head_imgs = [settings.load_img("snake_head{}.png".format(n), (settings.BLOCK_SIZE, settings.BLOCK_SIZE)) for n in range(1, 8)]
 body_img = py.image.load(os.path.join("images", "snake_body.png"))
