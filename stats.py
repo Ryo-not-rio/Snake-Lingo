@@ -18,7 +18,7 @@ def draw_graph(surface, x, y, colour=py.Color('white')):
         y_cor1 = int(surface.get_height() - y[i])
         x_cor2 = int(x[i+1])
         y_cor2 = int(surface.get_height() - y[i+1])
-        py.draw.line(surface, colour, (x_cor1, y_cor1), (x_cor2, y_cor2))
+        py.draw.line(surface, colour, (x_cor1, y_cor1), (x_cor2, y_cor2), 2)
 
 
 class Stats:
