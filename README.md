@@ -81,12 +81,20 @@ Additionally, the game could be adapted for non-native English speakers.
 
 ### Prerequisites
 Python >= 3.6
+pip3
 
-* For Linux make sure you have distutils and setuptools installed.
-
-    They can be installed by:
+* For Linux make sure you have distutils, dev and setuptools installed.
+    First update apt:
     ```
-    $ sudo apt-get install python3-distutils python3-setuptools
+    $ sudo apt update
+    ```
+    Then install distutils, dev and setuptools:
+    ```
+    $ sudo apt-get install python3-distutils python3-setuptools python3-dev
+    ```
+    Also, install wheel before installing any of the requirements:
+    ```
+    $ pip3 install wheel
     ```
 
 ### Installing
