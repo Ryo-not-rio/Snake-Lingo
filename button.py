@@ -11,6 +11,7 @@ class Button:
         self.surface.fill(back_colour)
 
         if back_img is not None:
+            print(back_img)
             img = py.image.load(back_img)
             img = py.transform.scale(img, shape).convert()
             img.set_alpha(60)
