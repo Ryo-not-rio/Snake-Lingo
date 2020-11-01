@@ -82,6 +82,13 @@ Additionally, the game could be adapted for non-native English speakers.
 ### Prerequisites
 Python >= 3.6
 
+* For Linux make sure you have distutils and setuptools installed.
+
+    They can be installed by:
+    ```
+    $ sudo apt-get install python3-distutils python3-setuptools
+    ```
+
 ### Installing
 1. Make sure you have python and the prerequisites installed
 
