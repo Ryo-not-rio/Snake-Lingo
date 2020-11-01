@@ -24,7 +24,7 @@ correct_sound = py.mixer.Sound(os.path.join("sounds", "correct.wav"))
 wrong_sound = py.mixer.Sound(os.path.join("sounds", "wrong.wav"))
 turn_sound = py.mixer.Sound(os.path.join("sounds", "turn.wav"))
 
-music = py.mixer.music.load(os.path.join("sounds", "music.mp3"))
+music = py.mixer.music.load(os.path.join("sounds", "music.wav"))
 py.mixer.music.set_volume(0.8)
 py.mixer.music.play(-1)
 
