@@ -63,18 +63,19 @@ A word counts as being learnt once you get that word correct 3 times in a row.
 
 
 ## 👨‍💻 Learning algorithm
-This game incorporates a learning algorithm to optimize your learning!
+This game incorporates a simple learning algorithm to optimize your learning!
 
 Firstly, for each word you are learning, the game will keep showing the word until
 you get it correct 3 times in a row.
 
 If you get too many words wrong, you will be shown those words over and over so you're
-not overloaded with too many words.
+not overloaded with too many new words.
 
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 This project would be an ideal mobile application as it is simple and is the type of game you would
 play on the subway or on the bus.
+Additionally, the game could be adapted for non-native English speakers.
 
 ## 💻 Downloading the project <a name = "getting_started"></a>
 
@@ -83,7 +84,7 @@ Python >= 3.6
 
 Dependencies can be installed by running the following command:
 ```
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 ### Installing
@@ -99,7 +100,7 @@ $ git clone https://github.com/Ryo-not-rio/SnakeFlashCard.git
 To run the game, in the directory where you downloaded the code,
 run:
 ```
-$ python main.py
+$ python3 main.py
 ```
 
 ## ✍️ Authors <a name = "authors"></a>
