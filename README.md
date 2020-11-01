@@ -39,7 +39,7 @@ you have to eat the correct apple that corresponds to the word on your head.
 In the game you will see a snake with a word from the foreign language on its head. That's you.
 Your objective is to eat the apple with the correct definition on it.
 If you eat the correct apple, you'll grow longer. Eat the wrong one, you'll shrink so be careful!
-<img src="images/game.png?raw=True">
+<img src="/images/game.png?raw">
 Also, if you touch the walls or a part of your body with your head, it's game over.
 
 # To control the snake, use "W-A-S-D" or the arrow keys!
@@ -47,7 +47,7 @@ Also, if you touch the walls or a part of your body with your head, it's game ov
 ### Main menu
 When you start the game, you'll be taken to the main menu.
 Here, choose the language you want to learn or practice.
-<img src="images/menu.png">
+<img src="/images/menu.png">
 
 If you choose the "Reverse" option, you will have the English word on your head and the apples showing 
 the words in the foreign language instead of the otherwise way round.
@@ -56,7 +56,7 @@ the words in the foreign language instead of the otherwise way round.
 Here you can see your stats!
 
 A word counts as being learnt once you get that word correct 3 times in a row.
-<img src="images/gameover.png">
+<img src="/images/gameover.png">
 
 
 ## 👨‍💻 Learning algorithm
