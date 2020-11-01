@@ -92,6 +92,10 @@ pip3
     ```
     $ sudo apt-get install python3-distutils python3-setuptools python3-dev
     ```
+    You may need to additionally run:
+    ```
+    $ sudo apt-get install build-essential
+    ```
     Also, install wheel before installing any of the requirements:
     ```
     $ pip3 install wheel
