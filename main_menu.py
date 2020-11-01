@@ -35,7 +35,8 @@ class MainMenu(screen.Screen):
         for i, lang in enumerate(languages.keys()):
             button_x = button_x_padding/2 + (i%num_cols)*(button_shape[0]+button_x_padding)
             button_y = 300 + (button_shape[1]+8)*(i // num_cols)
-            btn = button.Button(lang, lambda lang=lang: (lang, custom), button_shape, (button_x, button_y), back_img=os.path.join("images", lang+".png"))
+            img_name = lang+".png"
+            btn = button.Button(lang, lambda lang=lang: (lang, custom), button_shape, (button_x, button_y), back_img=os.path.join("images", img_name))
             self.objects.append(btn)
     
     def draw(self, display):
