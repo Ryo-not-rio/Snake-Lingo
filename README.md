@@ -87,19 +87,20 @@ Python >= 3.6
 
 2. Download the ZIP file from github directly or run the following:
 
-```
-$ git clone https://github.com/Ryo-not-rio/SnakeFlashCard.git
-```
+    ```
+    $ git clone https://github.com/Ryo-not-rio/SnakeFlashCard.git
+    ```
 
 3. If you have downloaded the ZIP file, unzip it.
 
-4. Install the dependencies:
-First, navigate to the downloaded folder of the project.
+4. Install the dependencies
 
-Next, dependencies can be installed by running the following command:
-```
-$ pip3 install -r requirements.txt
-```
+    First, navigate to the downloaded folder of the project.
+
+    Next, dependencies can be installed by running the following command:
+    ```
+    $ pip3 install -r requirements.txt
+    ```
 
 ## 🎈 Usage <a name="usage"></a>
 To run the game, in the directory where you downloaded the code,
