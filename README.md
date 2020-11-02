@@ -80,8 +80,8 @@ Additionally, the game could be adapted for non-native English speakers.
 ## 💻 Downloading the project <a name = "getting_started"></a>
 
 ### Prerequisites
-Python >= 3.6
-pip3
+* Python >= 3.6
+* pip3
 
 * For Linux make sure you have distutils, dev and setuptools installed.
     First update apt:
