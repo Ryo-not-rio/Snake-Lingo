@@ -16,7 +16,7 @@ import stats
 py.mixer.init(buffer=64)
 py.init()
 
-display = py.display.set_mode(settings.DISPLAY_SIZE)
+display = py.display.set_mode(settings.DISPLAY_SIZE, py.SCALED)
 clock = py.time.Clock()
 
 
