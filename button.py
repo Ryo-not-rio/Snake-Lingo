@@ -19,7 +19,7 @@ class Button:
         py.draw.rect(self.surface, colour, self.surface.get_rect(), 3)
         self.text = settings.text_surface(text, surf_shape=shape, size=max(shape)-4)
         self.surface.blit(self.text, (0, 0))
-        self.action = action
+        self.action = action    
         self.position = pos
 
     def click(self, pos):
